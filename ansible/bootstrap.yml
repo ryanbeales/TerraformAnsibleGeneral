@@ -1,0 +1,29 @@
+- hosts: general
+  remote_user: ec2-user
+  become: true
+  gather_facts: false
+  vars:
+    terraform_output: "{{ lookup('file', '../terraform/output.json') | from_json }}"
+  tasks:
+     - name: Set hostname
+       hostname:
+         name: "{{ terraform_output.fqdn.value }}"
+     - name: Install packages
+       yum:
+         name: gcc, python35, python35-devel, python35-pip
+         state: present
+     - name: Ensure my user is present
+       user:
+         name: dime
+     - name: Add my ssh key
+       authorized_key:
+         user: dime
+         state: present
+         key: "{{ lookup('file', '/home/dime/.ssh/id_rsa.pub') }}"
+     - name: Add me to sudoers
+       lineinfile:
+         path: /etc/sudoers.d/dime
+         state: present
+         create: yes
+         regexp: '^dime'
+         line: 'dime ALL=(ALL) NOPASSWD: ALL'
