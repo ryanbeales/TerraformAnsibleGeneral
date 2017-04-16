@@ -4,6 +4,7 @@
   gather_facts: false
   vars:
     terraform_output: "{{ lookup('file', '../terraform/output.json') | from_json }}"
+    username: dime
   tasks:
      - name: Set hostname
        hostname:
@@ -14,16 +15,16 @@
          state: present
      - name: Ensure my user is present
        user:
-         name: dime
+         name: {{ username }}
      - name: Add my ssh key
        authorized_key:
-         user: dime
+         user: {{ username }}
          state: present
-         key: "{{ lookup('file', '/home/dime/.ssh/id_rsa.pub') }}"
+         key: "{{ lookup('file', '/home/{{ username }}/.ssh/id_rsa.pub') }}"
      - name: Add me to sudoers
        lineinfile:
-         path: /etc/sudoers.d/dime
+         path: /etc/sudoers.d/{{ username }}
          state: present
          create: yes
-         regexp: '^dime'
-         line: 'dime ALL=(ALL) NOPASSWD: ALL'
+         regexp: '^{{ username }}'
+         line: '{{ username }} ALL=(ALL) NOPASSWD: ALL'
