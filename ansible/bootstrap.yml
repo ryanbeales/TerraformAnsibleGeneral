@@ -4,7 +4,6 @@
   gather_facts: false
   vars:
     terraform_output: "{{ lookup('file', '../terraform/output.json') | from_json }}"
-    username: dime
   tasks:
      - name: Set hostname
        hostname:
