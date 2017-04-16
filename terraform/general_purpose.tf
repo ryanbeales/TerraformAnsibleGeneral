@@ -12,7 +12,7 @@ resource "aws_instance" "general_purpose" {
     Name            = "general_purpose"
     ansibleFilter   = "General01"
     ansibleNodeType = "general"
-    ansibleNodeName = "general1"
+    ansibleNodeName = "${var.hostname}"
   }
 
   vpc_security_group_ids = [

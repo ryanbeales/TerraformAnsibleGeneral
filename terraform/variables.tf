@@ -30,3 +30,7 @@ variable "key_path" {
 variable "route53_zone_id" {
   description = "Zone ID to add the public ip of the host to"
 }
+
+variable "hostname" {
+  description = "The host name that will be regiered with route53, and eventually set with ansible"
+}
