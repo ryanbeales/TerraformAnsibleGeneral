@@ -1,3 +1,3 @@
 #!/bin/bash
-../../bin/terraform apply
-../../bin/terraform output -json > output.json
+terraform apply
+terraform output -json > output.json
