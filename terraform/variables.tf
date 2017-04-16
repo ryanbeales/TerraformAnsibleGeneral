@@ -25,6 +25,7 @@ variable "key_name" {
 
 variable "key_path" {
   description = "AWS EU west 2 key path"
+  default = ""
 }
 
 variable "route53_zone_id" {
