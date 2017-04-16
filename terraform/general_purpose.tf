@@ -18,11 +18,6 @@ resource "aws_instance" "general_purpose" {
   vpc_security_group_ids = [
     "${aws_security_group.ssh_sg.id}",
   ]
-
-  connection {
-    user        = "ec2-user"
-    private_key = "${file(var.key_path)}"
-  }
 }
 
 resource "aws_security_group" "ssh_sg" {
