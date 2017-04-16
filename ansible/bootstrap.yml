@@ -14,15 +14,15 @@
          state: present
      - name: Ensure my user is present
        user:
-         name: {{ username }}
+         name: "{{ username }}"
      - name: Add my ssh key
        authorized_key:
-         user: {{ username }}
+         user: "{{ username }}"
          state: present
          key: "{{ lookup('file', '/home/{{ username }}/.ssh/id_rsa.pub') }}"
      - name: Add me to sudoers
        lineinfile:
-         path: /etc/sudoers.d/{{ username }}
+         path: "/etc/sudoers.d/{{ username }}"
          state: present
          create: yes
          regexp: '^{{ username }}'
