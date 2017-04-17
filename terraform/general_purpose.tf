@@ -16,17 +16,24 @@ resource "aws_instance" "general_purpose" {
   }
 
   vpc_security_group_ids = [
-    "${aws_security_group.ssh_sg.id}",
+    "${aws_security_group.ssh_and_http_sg.id}",
   ]
 }
 
-resource "aws_security_group" "ssh_sg" {
-  name        = "general_purpose_ssh"
-  description = "Allow SSH to hosts"
+resource "aws_security_group" "ssh_and_http_sg" {
+  name        = "general_purpose_ssh_and_http"
+  description = "Allow SSH and HTTP (port 80) to hosts"
 
   ingress {
     from_port   = 22
     to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
