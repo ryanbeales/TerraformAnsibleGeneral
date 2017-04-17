@@ -1,0 +1,19 @@
+- hosts: general
+  remote_user: "{{ username }}"
+  become: true
+  gather_facts: false
+  tasks:
+     - name: Install PIP modules
+       pip:
+         name: Flask, gunicorn
+         state: present
+     - iptables:
+         table: nat
+         chain: PREROUTING
+         in_interface: eth0
+         protocol: tcp
+         match: tcp
+         destination_port: 80
+         jump: REDIRECT
+         to_ports: 5000
+         comment: Redirect web traffic to port 5000
