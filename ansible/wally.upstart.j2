@@ -1,0 +1,9 @@
+description "wally"
+
+start on (filesystem)
+stop on runlevel [016]
+
+respawn
+chdir {{ application_path }} 
+
+exec sudo -u dime /usr/local/bin/uwsgi --socket 127.0.0.1:8080 --manage-script-name --mount /=wally:app >{{application_path}}/wally.log 

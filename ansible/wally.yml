@@ -2,18 +2,41 @@
   remote_user: "{{ username }}"
   become: true
   gather_facts: false
+  vars:
+      application_path: /home/dime/wally
   tasks:
      - name: Install PIP modules
        pip:
-         name: Flask, gunicorn
+         name: Flask, uwsgi
          state: present
-     - iptables:
-         table: nat
-         chain: PREROUTING
-         in_interface: eth0
-         protocol: tcp
-         match: tcp
-         destination_port: 80
-         jump: REDIRECT
-         to_ports: 5000
-         comment: Redirect web traffic to port 5000
+
+     - name: Create app directory
+       file: path=/home/dime/wally state=directory
+
+     - name: Copy python applicatione 
+       copy:
+         src: wally.py
+         dest: /home/dime/wally/wally.py
+         owner: dime
+         group: dime
+         mode: 644
+
+     - name: Copy Upstart configuration
+       template: src=wally.upstart.j2 dest=/etc/init/wally.conf
+
+     - name: Make sure our server is running
+       service: name=wally state=started
+
+       #https://www.digitalocean.com/community/tutorials/how-to-deploy-python-wsgi-applications-using-uwsgi-web-server-with-nginx
+     - name: Copy Nginx site
+       template: src=wally-nginx.j2 dest=/etc/nginx/nginx.conf
+       notify:
+         - restart nginx
+
+     - name: Make sure nginx is running
+       service: name=nginx state=started
+
+  handlers:
+     - name: restart nginx
+       service: name=nginx state=restarted
+
