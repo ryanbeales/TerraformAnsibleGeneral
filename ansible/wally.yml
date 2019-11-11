@@ -27,7 +27,7 @@
          dest: /home/dime/keepalive.sh
          owner: dime
          group: dime
-         mode: 0644
+         mode: 0744
 
      - name: Copy Upstart configuration
        template: src=wally.upstart.j2 dest=/etc/init/wally.conf
