@@ -10,7 +10,7 @@
          name: "{{ terraform_output.fqdn.value }}"
      - name: Install packages
        yum:
-         name: gcc, python38, python38-devel, python38-pip, nginx
+         name: gcc, python35, python35-devel, python35-pip, nginx
          state: present
      - name: Ensure my user is present
        user:
