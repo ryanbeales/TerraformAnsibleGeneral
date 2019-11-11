@@ -19,7 +19,15 @@
          dest: /home/dime/wally/wally.py
          owner: dime
          group: dime
-         mode: 644
+         mode: 0644
+
+     - name: Copy keepalive script
+       copy:
+         src: keepalive.sh
+         dest: /home/dime/keepalive.sh
+         owner: dime
+         group: dime
+         mode: 0644
 
      - name: Copy Upstart configuration
        template: src=wally.upstart.j2 dest=/etc/init/wally.conf

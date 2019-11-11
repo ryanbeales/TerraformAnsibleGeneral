@@ -8,7 +8,7 @@ variable "ami" {
   default = {
     us-east-1 = "ami-0d729a60"
     us-west-1 = "ami-7c4b331c"
-    eu-west-2 = "ami-11130775"
+    eu-west-2 = "ami-05663d374a152d239"
   }
 
   description = "Default image to use in each region"
