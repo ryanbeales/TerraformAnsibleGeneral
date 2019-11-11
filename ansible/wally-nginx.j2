@@ -21,6 +21,9 @@ http {
                       application/x-javascript
                       application/atom+xml;
 
+    # Hide server version
+    server_tokens off;
+
     # Configuration containing list of application servers
     upstream uwsgicluster {
         server 127.0.0.1:8080;
