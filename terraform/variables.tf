@@ -3,12 +3,13 @@ variable "region" {
 }
 
 variable "ami" {
-  type = "map"
+  type = map(string)
 
   default = {
-    us-east-1 = "ami-0d729a60"
-    us-west-1 = "ami-7c4b331c"
-    eu-west-2 = "ami-11130775"
+    us-east-1 = "ami-0323c3dd2da7fb37d"
+    us-west-1 = "ami-06fcc1f0bc2c8943f"
+    us-west-2 = "ami-0d6621c01e8c2de2c"
+    eu-west-2 = "ami-01a6e31ac994bbc09"
   }
 
   description = "Default image to use in each region"
