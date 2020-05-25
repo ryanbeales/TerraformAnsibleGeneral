@@ -1,22 +1,22 @@
 provider "aws" {
-  region = "${var.region}"
+  region = var.region
 }
 
 resource "aws_instance" "general_purpose" {
-  ami                         = "${lookup(var.ami, var.region)}"
-  instance_type               = "${var.instance_type}"
-  key_name                    = "${var.key_name}"
+  ami                         = lookup(var.ami, var.region)
+  instance_type               = var.instance_type
+  key_name                    = var.key_name
   associate_public_ip_address = true
 
   tags {
     Name            = "general_purpose"
     ansibleFilter   = "General01"
     ansibleNodeType = "general"
-    ansibleNodeName = "${var.hostname}"
+    ansibleNodeName = var.hostname
   }
 
   vpc_security_group_ids = [
-    "${aws_security_group.ssh_sg.id}",
+    aws_security_group.ssh_sg.id,
   ]
 }
 
@@ -47,9 +47,9 @@ resource "aws_security_group" "ssh_sg" {
 }
 
 resource "aws_route53_record" "general" {
-  zone_id = "${var.route53_zone_id}"
-  name    = "${aws_instance.general_purpose.tags.ansibleNodeName}"
+  zone_id = var.route53_zone_id
+  name    = aws_instance.general_purpose.tags.ansibleNodeName
   type    = "A"
   ttl     = "300"
-  records = ["${aws_instance.general_purpose.public_ip}"]
+  records = [aws_instance.general_purpose.public_ip]
 }
