@@ -8,7 +8,7 @@ resource "aws_instance" "general_purpose" {
   key_name                    = var.key_name
   associate_public_ip_address = true
 
-  tags {
+  tags = {
     Name            = "general_purpose"
     ansibleFilter   = "General01"
     ansibleNodeType = "general"
